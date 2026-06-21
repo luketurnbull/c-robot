@@ -33,6 +33,24 @@ void draw(struct Coords *robot, struct Coords *target) {
 	}
 }
 
+void update(struct Coords *robot) {
+	char direction[1024];
+	printf("Enter a direction; u(p) r(ight) l(eft) d(own))\n");
+	scanf("%1023s", direction);
+
+	if (!strcmp(direction, "u")) {
+		robot->y--;
+	} else if (!strcmp(direction, "r")) {
+		robot->x++;
+	} else if (!strcmp(direction, "l")) {
+		robot->x--;
+	} else if (!strcmp(direction, "d")) {
+		robot->y++;
+	} else {
+		printf("Invalid input, robot has not moved");
+	}
+}
+
 int main() {
 	struct Coords target = {.x = 7, .y = 7};
 	struct Coords robot = {.x = 5, .y = 5};
@@ -41,26 +59,10 @@ int main() {
 	draw(&robot, &target);
 
 	while (robot.x != target.x || robot.y != target.y) {
-		char direction[1024];
-		printf("Enter a direction; u(p) r(ight) l(eft) d(own))\n");
-		scanf("%1023s", direction);
-
-		if (!strcmp(direction, "u")) {
-			robot.y--;
-		} else if (!strcmp(direction, "r")) {
-			robot.x++;
-		} else if (!strcmp(direction, "l")) {
-			robot.x--;
-		} else if (!strcmp(direction, "d")) {
-			robot.y++;
-		} else {
-			printf("Invalid input, robot has not moved");
-			break;
-		}
-
+		update(&robot);
 		draw(&robot, &target);
 	}
 
-	printf("You found the target!");
+	printf("You found the target!\n");
 	return 0;
 }
