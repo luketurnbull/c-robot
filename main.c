@@ -9,18 +9,18 @@ struct Coords {
 	int y;
 };
 
-void draw(struct Coords robot, struct Coords target) {
+void draw(struct Coords *robot, struct Coords *target) {
 	for (int y = 1; y < BOARD_SIZE + 1; y++) {
 		for (int x = 1; x < BOARD_SIZE + 1; x++) {
 			char *cell = "[ ]";
 
 			// Check if target is this cell
-			if (x == target.x && y == target.y) {
+			if (x == target->x && y == target->y) {
 				cell = "[o]";
 			}
 
 			// Check if robot is this cell
-			if (x == robot.x && y == robot.y) {
+			if (x == robot->x && y == robot->y) {
 				cell = "[x]";
 			}
 
@@ -38,7 +38,7 @@ int main() {
 	struct Coords robot = {.x = 5, .y = 5};
 
 	// Draw the initial grid
-	draw(robot, target);
+	draw(&robot, &target);
 
 	while (robot.x != target.x || robot.y != target.y) {
 		char direction[1024];
@@ -58,7 +58,7 @@ int main() {
 			break;
 		}
 
-		draw(robot, target);
+		draw(&robot, &target);
 	}
 
 	printf("You found the target!");
